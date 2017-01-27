@@ -105,9 +105,9 @@ class AddMovie(webapp2.RequestHandler):
 
         # TODO 2
         # if the user typed nothing at all, redirect and yell at them
-        if new_movie == "":
+        if new_movie.strip() == "":
             # make a helpful error message
-            error_empty = "'Please enter something!"
+            error_empty = "Please enter a movie name!"
 
             # redirect to homepage, and include error as a query parameter in the URL
             self.redirect("/?error=" + error_empty)
@@ -115,12 +115,12 @@ class AddMovie(webapp2.RequestHandler):
 
         # TODO 3
         # if the user wants to add a terrible movie, redirect and yell at them
-        # if new_movie in terrible_movies():
-        #     error = "'{0}' is not in your Watchlist, so you can't cross it off!".format(crossed_off_movie)
-        #     error_escaped = cgi.escape(error, quote=True)
+        if new_movie in terrible_movies:
+            error_terrible = "'{0}' is a terrible movie, we will not add it here!".format(new_movie)
+            error_message_terrible = cgi.escape(error_terrible, quote=True)
 
-        #     # redirect to homepage, and include error as a query parameter in the URL
-        #     self.redirect("/?error=" + error_escaped)
+            # redirect to homepage, and include error as a query parameter in the URL
+            self.redirect("/?error=" + error_message_terrible)
 
 
         # TODO 1
